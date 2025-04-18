@@ -3,101 +3,312 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mensatto - Construtor de Fluxos</title>
+  <title>Mensatto - Automação Inteligente para WhatsApp</title>
 
-  <!-- Tailwind CSS -->
+
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://mensatto-git-main-jeffersonsantosdevs-projects.vercel.app">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Automação inteligente">
+<meta property="og:description" content="Envie mensagens, crie fluxos e interaja com seus clientes 24h por dia.">
+<meta property="og:image" content="https://mensatto-git-main-jeffersonsantosdevs-projects.vercel.app/images/mensatto_og_resized.jpg" /> 
+
+ 
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mensatto">
+<meta name="twitter:description" content="Envie mensagens, crie fluxos e interaja com seus clientes 24h por dia.">
+<meta name="twitter:image" content="https://mensatto-git-main-jeffersonsantosdevs-projects.vercel.app/images/mensatto_og_resized.jpg" />
+
+   
+<!-- Ícones -->
+<link rel="icon" type="image/ico" href="/images/flavicon.ico">
+<link rel="shortcut icon" type="image/ico" href="/images/flavicon.ico">
+
+
+  <!-- Tailwind, Font Awesome e Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- jsPlumb CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/css/jsplumbtoolkit-defaults.min.css" />
-  <!-- Custom CSS -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --primary: #1F3D30;
+      --secondary: #F8F7F3;
+    }
+  
+    /* wrapper da imagem: mesmo background da página + cantos arredondados */
+    .hero-wrapper {
+      background-color: var(--secondary);
+      border-radius: 1rem;
+      overflow: hidden;
+      padding: .5rem; /* espaçamento interno */
+    }
+  
+    /* controla o tamanho máximo da imagem */
+    .hero-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 20rem; /* 320px */
+    }
+
+    /* Botão flutuante WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background-color: #25D366; /* cor oficial do WhatsApp */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Hover */
+.whatsapp-float:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Animação de flutuação */
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+  </style>
+
+  <!-- Seu CSS customizado -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="min-h-screen">
 
-  <!-- Header -->
-  <header class="bg-white border-b shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-primary">Mensatto - Construtor de Fluxos</h1>
-      <div class="flex space-x-2">
-        <button id="previewBtn" class="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200 flex items-center text-sm"><i class="fas fa-eye mr-1"></i>Visualizar</button>
-        <button id="saveBtn" class="px-3 py-1 bg-primary text-white rounded hover:bg-green-700 flex items-center text-sm"><i class="fas fa-save mr-1"></i>Salvar</button>
-        <button id="exportBtn" class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center text-sm"><i class="fas fa-file-export mr-1"></i>Exportar</button>
+  <!-- Navigation -->
+  <nav class="fixed w-full bg-white shadow-md z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex-shrink-0 flex items-center">
+          <div class="flex items-center cursor-pointer" onclick="goHome()">
+            <i class="fas fa-robot text-2xl mr-2" style="color: #1F3D30;"></i>
+            <span class="text-xl font-bold" style="color: #1F3D30;">Mensatto</span>
+          </div>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-center space-x-4">
+            <a href="#home" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Início</a>
+            <a href="#about" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Sobre</a>
+            <a href="#features" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Funcionalidades</a>
+            <button onclick="location.href='login.html'" class="btn-primary px-4 py-2 rounded-md text-sm font-medium">
+              Entrar
+            </button>
+          </div>
+        </div>
+        <div class="md:hidden">
+          <button onclick="location.href='login.html'" class="btn-primary px-4 py-2 rounded-md text-sm font-medium">
+            Entrar
+          </button>
+        </div>
       </div>
     </div>
-  </header>
+  </nav>
 
-  <!-- Main -->
-  <main class="max-w-7xl mx-auto px-4 py-6">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+  <!-- Landing Page -->
+  <div id="landing-page">
 
-      <!-- Canvas -->
-      <section class="lg:col-span-3 bg-white rounded-lg shadow h-[600px] relative">
-        <div id="flowCanvas" class="w-full h-full"></div>
-        <!-- Zoom Controls -->
-        <div class="absolute top-4 right-4 flex space-x-1">
-          <button id="zoomIn" class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"><i class="fas fa-plus text-xs"></i></button>
-          <button id="zoomOut" class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"><i class="fas fa-minus text-xs"></i></button>
-          <button id="resetView" class="px-2 py-1 bg-gray-100 rounded hover:bg-gray-200"><i class="fas fa-expand text-xs"></i></button>
-        </div>
-      </section>
+<!-- Hero Section -->
+<section
+  id="home"
+  class="pt-24 pb-12 md:pt-32 md:pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+>
+  <div class="flex flex-col lg:flex-row items-center gap-8">
 
-      <!-- Sidebar -->
-      <aside class="lg:col-span-1 space-y-6">
-        <!-- Add Node -->
-        <div class="bg-white rounded-lg shadow p-4">
-          <h2 class="text-lg font-semibold mb-3">Adicionar Nó</h2>
-          <div class="space-y-2">
-            <button class="w-full text-left px-3 py-2 bg-green-50 rounded hover:bg-green-100 flex items-center" data-node-type="message">
-              <i class="fas fa-comment text-green-600 mr-2"></i> Mensagem
-            </button>
-            <button class="w-full text-left px-3 py-2 bg-blue-50 rounded hover:bg-blue-100 flex items-center" data-node-type="options">
-              <i class="fas fa-list text-blue-600 mr-2"></i> Opções
-            </button>
-            <button class="w-full text-left px-3 py-2 bg-red-50 rounded hover:bg-red-100 flex items-center" data-node-type="end">
-              <i class="fas fa-flag-checkered text-red-600 mr-2"></i> Finalizar
-            </button>
-          </div>
-        </div>
-
-        <!-- Node Editor -->
-        <div class="bg-white rounded-lg shadow p-4">
-          <div id="nodeEditor">
-            <div id="noNodeSelected" class="text-center text-gray-500 py-10">
-              <p>Selecione um nó para editar</p>
-            </div>
-            <div id="nodeEditForm" class="hidden">
-              <div class="flex justify-between items-center mb-4">
-                <h3 id="nodeEditTitle" class="text-lg font-semibold">Editar Nó</h3>
-                <button id="deleteNodeBtn" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
-              </div>
-              <div class="mb-3">
-                <label for="nodeLabel" class="block text-sm font-medium text-gray-700">Título</label>
-                <input id="nodeLabel" type="text" class="mt-1 block w-full border-gray-300 rounded-md p-2" />
-              </div>
-              <div class="mb-3">
-                <label for="nodeMessage" class="block text-sm font-medium text-gray-700">Mensagem</label>
-                <textarea id="nodeMessage" rows="3" class="mt-1 block w-full border-gray-300 rounded-md p-2"></textarea>
-              </div>
-              <div id="optionsSection" class="hidden">
-                <div class="flex justify-between items-center mb-2">
-                  <label class="text-sm font-medium text-gray-700">Opções</label>
-                  <button id="addOptionBtn" class="text-blue-600 hover:text-blue-800">+ Adicionar</button>
-                </div>
-                <ul id="optionsList" class="space-y-2"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
+    <!-- Texto -->
+    <div class="w-full lg:w-1/2 space-y-6 text-center lg:text-left">
+      <h1 class="text-4xl md:text-5xl font-bold" style="color: var(--primary);">
+        Automação inteligente para o seu WhatsApp
+      </h1>
+      <p class="text-lg text-gray-600">
+        Envie mensagens, crie fluxos e interaja com seus clientes 24h por dia.
+      </p>
+      <button
+        onclick="location.href='login.html'"
+        class="btn-primary px-6 py-3 rounded-lg text-lg font-semibold"
+      >
+        Acessar sistema
+      </button>
     </div>
-  </main>
 
-  <!-- jsPlumb -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/js/jsplumb.min.js"></script>
-  <!-- Custom JS -->
-  <script src="flow-builder.js"></script>
-  <script src="scripts.js"></script>
+    <!-- Imagem ajustada -->
+    <div class="hidden md:flex w-full md:w-1/2 justify-center">
+        <div class="hero-wrapper">
+          <img
+            src="images/hero-auto-mensatto-removebg-preview.png"
+            alt="Automação Mensatto - Chat"
+            class="w-full h-auto"
+          />
+        </div>
+      </div>
+
+  </div>
+</section>
+
+
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-white rounded-xl shadow-sm mt-12">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4" style="color: #1F3D30;">Por que escolher a Mensatto?</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">
+          A Mensatto é uma plataforma moderna de automação de WhatsApp. Nossa missão é simplificar a comunicação entre
+          empresas e clientes, automatizando mensagens, agendamentos, respostas e muito mais.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <div class="flex justify-center mb-4">
+            <i class="fas fa-brain text-4xl" style="color: #1F3D30;"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Inteligência</h3>
+          <p class="text-gray-600">Respostas inteligentes baseadas em IA para melhor atendimento</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <div class="flex justify-center mb-4">
+            <i class="fas fa-cogs text-4xl" style="color: #1F3D30;"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Fluxos automáticos</h3>
+          <p class="text-gray-600">Crie sequências de mensagens automatizadas para diferentes situações</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <div class="flex justify-center mb-4">
+            <i class="fas fa-paper-plane text-4xl" style="color: #1F3D30;"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Envio em massa</h3>
+          <p class="text-gray-600">Comunique-se com milhares de clientes de forma rápida e eficiente</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg text-center">
+          <div class="flex justify-center mb-4">
+            <i class="fas fa-chart-line text-4xl" style="color: #1F3D30;"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Relatórios</h3>
+          <p class="text-gray-600">Acompanhe métricas e resultados das suas campanhas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-12">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-4" style="color: #1F3D30;">Funcionalidades</h2>
+        <p class="text-gray-600 max-w-3xl mx-auto">Tudo que você precisa para automatizar sua comunicação no WhatsApp</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div class="feature-card bg-white p-8 rounded-xl shadow-md transition-all duration-300">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-green-50 p-3 rounded-lg mr-4">
+              <i class="fas fa-project-diagram text-2xl" style="color: #1F3D30;"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Criação de fluxos</h3>
+              <p class="text-gray-600">
+                Desenhe fluxos de conversação complexos com nossa interface intuitiva. Defina respostas automáticas para diferentes tipos de mensagens.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="feature-card bg-white p-8 rounded-xl shadow-md transition-all duration-300">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-green-50 p-3 rounded-lg mr-4">
+              <i class="fas fa-bullhorn text-2xl" style="color: #1F3D30;"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Envio em massa</h3>
+              <p class="text-gray-600">
+                Envie mensagens personalizadas para milhares de contatos simultaneamente, com controle de agendamento e relatórios de entrega.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="feature-card bg-white p-8 rounded-xl shadow-md transition-all duration-300">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-green-50 p-3 rounded-lg mr-4">
+              <i class="fas fa-reply text-2xl" style="color: #1F3D30;"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Respostas automáticas</h3>
+              <p class="text-gray-600">Configure respostas instantâneas para perguntas frequentes, melhorando o tempo de resposta e a satisfação do cliente.</p>
+            </div>
+          </div>
+        </div>
+        <div class="feature-card bg-white p-8 rounded-xl shadow-md transition-all duration-300">
+          <div class="flex items-start">
+            <div class="flex-shrink-0 bg-green-50 p-3 rounded-lg mr-4">
+              <i class="fas fa-tachometer-alt text-2xl" style="color: #1F3D30;"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold mb-2">Dashboard em tempo real</h3>
+              <p class="text-gray-600">Monitore todas as interações, métricas de desempenho e relatórios em um painel centralizado e fácil de usar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-12 rounded-xl" style="background-color: #1F3D30;">
+      <div class="text-center text-white">
+        <h2 class="text-3xl font-bold mb-4">Pronto para transformar seu atendimento?</h2>
+        <p class="text-gray-200 mb-8 max-w-2xl mx-auto">
+          Junte-se a milhares de empresas que já automatizaram sua comunicação no WhatsApp com a Mensatto.
+        </p>
+        <button onclick="location.href='login.html'"
+                class="bg-white text-green-800 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors">
+          Entrar no sistema
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-12">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center mb-4 md:mb-0">
+          <i class="fas fa-robot text-2xl mr-2" style="color: #1F3D30;"></i>
+          <span class="text-xl font-bold" style="color: #1F3D30;">Mensatto</span>
+        </div>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-600 hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-600 hover{text-primary"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-gray-600 hover{text-primary"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-gray-600 hover{text-primary"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-500 text-sm">
+        <p>© 2023 Mensatto. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+
+    <!-- Botão flutuante WhatsApp -->
+    <a
+    href="https://wa.me/SEUNUMERO?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20Mensatto."
+    target="_blank"
+    rel="noopener"
+    class="whatsapp-float"
+    aria-label="Chamar no WhatsApp"
+  >
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
 </body>
 </html>

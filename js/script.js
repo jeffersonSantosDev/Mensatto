@@ -41,3 +41,6 @@ document.querySelector('.login-container').addEventListener('click', function(e)
 document.querySelectorAll('.fa-robot').forEach(icon => {
     icon.addEventListener('click', showLanding);
 });
+
+
+ 

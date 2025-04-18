@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mensatto</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- jsPlumb -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/css/jsplumbtoolkit-defaults.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/stylesFlow.css">
+    <style>
+        /* Ajustes para mobile */
+        @media (max-width: 767.98px) {
+            .vh-100 {
+                height: auto !important;
+            }
+            #flowCanvas {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white border-bottom shadow-sm">
+        <div class="container-fluid">
+            <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
+                <h1 class="h3 fw-bold text-primary m-0">Mensatto - Construtor de Fluxo</h1>
+                <div class="d-flex gap-2 flex-wrap mt-2 mt-md-0">
+                    <button class="btn btn-light" id="previewBtn">Visualizar</button>
+                    <button class="btn btn-primary" id="saveBtn">Salvar Fluxo</button>
+                    <button class="btn btn-info text-white" id="exportBtn">Exportar</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row pt-2 mt-2">
+            <!-- Main Flow Canvas -->
+            <div class="col-12 col-md-9 pe-0">
+                <div class="card h-100">
+                    <div class="card-body p-0 position-relative">
+                        <div id="flowCanvas" class="flow-canvas"></div>
+                        <div class="flow-controls">
+                            <button class="btn btn-sm btn-light" id="zoomIn"><i class="fas fa-plus"></i></button>
+                            <button class="btn btn-sm btn-light" id="zoomOut"><i class="fas fa-minus"></i></button>
+                            <button class="btn btn-sm btn-light" id="resetView"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="col-12 col-md-3 ps-2 mt-3 mt-md-0">
+                <!-- Add Node Section -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Adicionar Nó</h5>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-light text-start node-btn" data-node-type="message">
+                                <span class="node-icon bg-success-subtle text-success rounded-circle me-2">💬</span>
+                                Mensagem
+                            </button>
+                            <button class="btn btn-light text-start node-btn" data-node-type="options">
+                                <span class="node-icon bg-primary-subtle text-primary rounded-circle me-2">🔢</span>
+                                Opções
+                            </button>
+                            <button class="btn btn-light text-start node-btn" data-node-type="end">
+                                <span class="node-icon bg-danger-subtle text-danger rounded-circle me-2">🏁</span>
+                                Finalizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Node Section -->
+                <div class="card">
+                    <div class="card-body">
+                        <div id="nodeEditor">
+                            <div class="text-center text-secondary py-5" id="noNodeSelected">
+                                <p>Selecione um nó para editar suas propriedades</p>
+                            </div>
+                            
+                            <div id="nodeEditForm" class="d-none">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5 class="card-title mb-0" id="nodeEditTitle">Editar Nó</h5>
+                                    <button class="btn btn-sm btn-danger" id="deleteNodeBtn">
+                                        <i class="fas fa-trash-alt me-1"></i> Excluir
+                                    </button>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="nodeLabel" class="form-label">Título do Nó</label>
+                                    <input type="text" class="form-control" id="nodeLabel">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="nodeMessage" class="form-label">Mensagem</label>
+                                    <textarea class="form-control" id="nodeMessage" rows="4"></textarea>
+                                </div>
+                                
+                                <!-- Options section (only for options node) -->
+                                <div id="optionsSection" class="d-none">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <label class="form-label mb-0">Opções</label>
+                                        <button class="btn btn-sm btn-outline-primary" id="addOptionBtn">
+                                            Adicionar Opção
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="optionsList" class="mb-3">
+                                        <!-- Options will be added here dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jsPlumb -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/js/jsplumb.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/js/flow-builder.js"></script>
+</body>
+</html>

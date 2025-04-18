@@ -74,3 +74,6 @@ html {
     align-items: center;
     justify-content: center;
 }
+
+#flowCanvas { position: relative; }
+.node { cursor: move; }

@@ -1,0 +1,226 @@
+:root {
+    --primary: #1f3d30;
+    --primary-light: #2a5241;
+    --primary-dark: #173024;
+    --light-bg: #f8f7f3;
+    --gray-light: #e2e2e2;
+    --gray-dark: #444;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--light-bg);
+  }
+  
+  /* Override Bootstrap primary color */
+  .btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+  }
+  
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active {
+    background-color: var(--primary-light) !important;
+    border-color: var(--primary-light) !important;
+  }
+  
+  .btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+  
+  .btn-outline-primary:hover,
+  .btn-outline-primary:focus,
+  .btn-outline-primary:active {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+  }
+  
+  .text-primary {
+    color: var(--primary) !important;
+  }
+  
+  .bg-primary {
+    background-color: var(--primary) !important;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .container,
+  .container-fluid {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  /* Button hover effects */
+  .btn {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Card hover effect */
+  .hover-card {
+    transition: all 0.3s ease;
+  }
+  
+  .hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Feature icons */
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .feature-icon i {
+    font-size: 24px;
+  }
+  
+  /* Custom spacing */
+  .py-7 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  
+  /* Flow Builder Styles */
+  .flow-canvas {
+    width: 100%;
+    height: 100%;
+    background-color: #f8f9fa;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    position: relative;
+    overflow: auto;
+  }
+  
+  .flow-node {
+    position: absolute;
+    padding: 15px;
+    border-radius: 5px;
+    min-width: 200px;
+    max-width: 250px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: move;
+    z-index: 10;
+  }
+  
+  .flow-node-message {
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+  }
+  
+  .flow-node-options {
+    background-color: #cfe2ff;
+    border: 1px solid #b6d4fe;
+  }
+  
+  .flow-node-end {
+    background-color: #f8d7da;
+    border: 1px solid #f5c2c7;
+  }
+  
+  .flow-node-header {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .flow-node-message .flow-node-header {
+    color: #0f5132;
+  }
+  
+  .flow-node-options .flow-node-header {
+    color: #084298;
+  }
+  
+  .flow-node-end .flow-node-header {
+    color: #842029;
+  }
+  
+  .flow-node-content {
+    font-size: 13px;
+    color: #333;
+  }
+  
+  .flow-node-options-list {
+    margin-top: 8px;
+  }
+  
+  .flow-node-option {
+    background-color: white;
+    padding: 4px 8px;
+    margin: 4px 0;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .endpoint {
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #6c757d;
+    cursor: pointer;
+  }
+  
+  .endpoint-source {
+    border-color: #0d6efd;
+  }
+  
+  .endpoint-target {
+    border-color: #198754;
+  }
+  
+  .flow-controls {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 5px;
+    z-index: 100;
+  }
+  
+  .node-icon {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .option-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .option-item .form-control {
+    flex-grow: 1;
+  }
+  
+  .option-item .btn {
+    margin-left: 8px;
+  }
+  
